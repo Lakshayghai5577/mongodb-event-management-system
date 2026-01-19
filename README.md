@@ -1,14 +1,37 @@
 # mongodb-event-management-system
-# Event Management & Ticketing System (MongoDB)
+This project is a MongoDB-based backend design for an **Event Management and Ticketing System**.  
+It demonstrates how events can be created, categorized, browsed, and booked using MongoDB collections, queries, and aggregations.
 
-This project demonstrates the design of a MongoDB-based backend system for managing events, ticket bookings, and user interactions. It focuses on schema design, sample data modeling, CRUD operations, aggregation pipelines, and indexing.
+The project is created as part of a MongoDB assignment to strengthen understanding of **schema design, data modeling, CRUD operations, aggregation pipelines, and indexing**.
 
-## Collections Used
+---
 
-### Users
-Stores information about users of the system. Users can be either organizers or attendees.
+## Project Objectives
+- Design a structured MongoDB schema for an event management system  
+- Model relationships between users, events, tickets, and categories  
+- Perform CRUD operations on all collections  
+- Generate analytical reports using aggregation pipelines  
+- Apply indexing to optimize frequent queries  
 
-Sample Data:
+---
+
+## Collections Overview
+
+### 1. Users Collection
+The Users collection stores details of all users in the system.  
+A user can be either:
+- **Organizer** – creates and manages events  
+- **Attendee** – browses events and books tickets  
+
+**Key Fields:**
+- userId  
+- name  
+- email  
+- phone  
+- role  
+- createdAt  
+
+**Sample Document:**
 ```js
 {
   userId: "USR001",
@@ -18,10 +41,21 @@ Sample Data:
   role: "organizer",
   createdAt: new Date()
 }
-Categories
-Used to classify events based on their type.
+2. Categories Collection
+The Categories collection is used to classify events based on their nature.
+This helps in filtering events and generating category-wise reports.
 
-Sample Data:
+Examples: Music, Technology, Sports, Arts, Business, Education, Comedy
+
+Key Fields:
+
+categoryId
+
+name
+
+description
+
+Sample Document:
 
 js
 Copy code
@@ -30,10 +64,41 @@ Copy code
   name: "Technology",
   description: "Technology conferences and workshops"
 }
-Events
-Stores details of events created by organizers.
+3. Events Collection
+The Events collection stores details of events created by organizers.
+Each event:
 
-Sample Data:
+Belongs to a category
+
+Is created by one organizer
+
+Contains ticket pricing and availability
+
+Key Fields:
+
+eventId
+
+title
+
+description
+
+category
+
+dateTime
+
+venue
+
+organizerId
+
+price
+
+totalTickets
+
+availableTickets
+
+status
+
+Sample Document:
 
 js
 Copy code
@@ -48,10 +113,27 @@ Copy code
   availableTickets: 180,
   status: "upcoming"
 }
-Tickets
-Represents ticket bookings made by users for events.
+4. Tickets Collection
+The Tickets collection represents ticket bookings made by users for events.
+A user can book multiple tickets for the same event.
 
-Sample Data:
+Key Fields:
+
+ticketId
+
+eventId
+
+userId
+
+bookingDate
+
+quantity
+
+totalAmount
+
+status
+
+Sample Document:
 
 js
 Copy code
@@ -63,16 +145,57 @@ Copy code
   totalAmount: 3000,
   status: "booked"
 }
-Features Implemented
-Event creation and management
+Relationships Between Collections
+One organizer can create multiple events
 
-Ticket booking functionality
+One event can have multiple ticket bookings
 
-Event categorization
+One user can book tickets for multiple events
 
-CRUD operations on all collections
+Each event belongs to one category
 
-Aggregation reports (ticket sales, revenue, attendees)
+Relationships are maintained using reference fields such as organizerId, eventId, and userId.
+
+CRUD Operations
+The project includes examples of:
+
+Creating users, events, and tickets
+
+Reading and filtering event data
+
+Updating ticket availability after booking
+
+Deleting records such as cancelled events
+
+These operations demonstrate basic interaction with MongoDB collections.
+
+Aggregation Pipelines
+The following aggregation reports are implemented:
+
+Top 5 events by ticket sales
+
+Total revenue earned by an organizer
+
+Number of attendees per event
+
+Events grouped by category and status
+
+These queries showcase MongoDB’s data analysis capabilities.
+
+Indexing
+Indexes are applied on commonly queried fields such as:
+
+Event date
+
+Event category
+
+Ticket lookups by user and event
+
+Indexing improves query performance and efficiency.
+
+Implementation Note
+The schemas, sample data, and queries included in this project are created for academic and demonstration purposes to explain MongoDB concepts and expected system behavior.
+No live database connection is submitted as per assignment instructions.
 
 Indexing for query optimization
 
